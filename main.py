@@ -1,6 +1,8 @@
 import customtkinter as ctk
 import json
 import os
+
+from datetime import datetime
 from tkinter import messagebox
 
 # Настройки внешнего вида
@@ -136,6 +138,13 @@ class ScriptCopier(ctk.CTk):
             btn.pack(fill="x", pady=4, padx=10)
 
     def copy_to_clipboard(self, text: str, name: str):
+        
+        now = datetime.now()
+        text = text.replace("{{date}}", now.strftime("%d.%m.%y"))      
+        text = text.replace("{{date_full}}", now.strftime("%d.%m.%Y")) 
+        text = text.replace("{{time}}", now.strftime("%H:%M"))    
+        #text = text.replace("")    
+
         try:
             self.clipboard_clear()
             self.clipboard_append(text)
