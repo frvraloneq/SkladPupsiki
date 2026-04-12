@@ -61,7 +61,7 @@ class ScriptCopier(ctk.CTk):
         version_label = ctk.CTkLabel(
             self,
             height=5,
-            text="v0.0030",                   
+            text="v0.0035",                   
             font=ctk.CTkFont(size=10),
             text_color="#555555",            
         )
