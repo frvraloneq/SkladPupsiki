@@ -33,16 +33,11 @@ class ScriptCopier(ctk.CTk):
                      font=ctk.CTkFont(size=15)).pack(side="left", padx=(10, 5))
 
         self.group_var = ctk.StringVar(value="Загрузка...")
-        self.group_menu = ctk.CTkOptionMenu(self.group_frame, 
-                                            variable=self.group_var,
-                                            values=["Загрузка..."],
-                                            command=self.on_group_change,
-                                            width=320)
+        self.group_menu = ctk.CTkOptionMenu(self.group_frame, variable=self.group_var, values=["Загрузка..."], command=self.on_group_change, width=320)
         self.group_menu.pack(side="left", padx=5)
 
-        self.refresh_btn = ctk.CTkButton(self.group_frame, text="↻ Обновить список", 
-                                         width=150, command=self.load_scripts)
-        self.refresh_btn.pack(side="right", padx=10)
+        self.refresh_btn = ctk.CTkButton(self.group_frame, text="↻ Обновить список", width=100, command=self.load_scripts)
+        self.refresh_btn.pack(side="right", padx=0)
 
         # Поиск
         self.search_var = ctk.StringVar()
@@ -61,6 +56,16 @@ class ScriptCopier(ctk.CTk):
                      font=ctk.CTkFont(size=14)).pack(anchor="w", padx=25, pady=(5,0))
         self.preview_text = ctk.CTkTextbox(self, height=150)
         self.preview_text.pack(fill="x", padx=25, pady=(0, 25))
+
+        # Версия приложения в правом нижнем углу
+        version_label = ctk.CTkLabel(
+            self,
+            height=5,
+            text="v0.0030",                   
+            font=ctk.CTkFont(size=10),
+            text_color="#555555",            
+        )
+        version_label.place(relx=1.0, rely=1.0, x=-5, y=-5, anchor="se")
 
         # Загружаем скрипты
         self.load_scripts()
@@ -143,8 +148,10 @@ class ScriptCopier(ctk.CTk):
         text = text.replace("{{date}}", now.strftime("%d.%m.%y"))      
         text = text.replace("{{date_full}}", now.strftime("%d.%m.%Y")) 
         text = text.replace("{{time}}", now.strftime("%H:%M"))    
-        #text = text.replace("")    
-
+        text = text.replace("[наименование]", " ")    
+        text = text.replace("[номер накладной]", " ")
+        text = text.replace("[дата доставки]", " ")
+        
         try:
             self.clipboard_clear()
             self.clipboard_append(text)
